@@ -2,8 +2,7 @@ package SWEA;
 
 import java.util.Scanner;
 
-public class SWEA_2112 {
-
+public class Example {
 	public static void main(String args[]) throws Exception
 	{
 		
@@ -15,7 +14,7 @@ public class SWEA_2112 {
 		{
 		
 			
-
+			System.out.println("#"+test_case+" ");
 		}
 	}
 }
