@@ -18,6 +18,7 @@ public class BJO_17071 {
 		
 		for(int i=0;i<2; i++)
 			for(int j=0; j<Max; j++)
+				
 				visited[i][j] = -1;
 		visited[0][N] = time;
 
