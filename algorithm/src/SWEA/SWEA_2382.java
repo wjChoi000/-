@@ -98,15 +98,18 @@ public class SWEA_2382 {
 				
 			}
 			
+			if(K==50 &&M==10)
+				System.out.println(" ");
+			
 			
 			for(int i =0; i<M;i++) {
 				move();
-//				System.out.println("#"+i+1);
-//				for(int c=0; c<K; c++) {
-//					for(int r=0; r<4; r++)
-//						System.out.print(list_K[c][r]+" ");
-//					System.out.println();
-//				}
+				System.out.println("#"+i+1);
+				for(int c=0; c<K; c++) {
+					for(int r=0; r<4; r++)
+						System.out.print(list_K[c][r]+" ");
+					System.out.println();
+				}
 			}
 			
 			System.out.println("#"+test_case+" "+sum_m());
