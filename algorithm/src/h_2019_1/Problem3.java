@@ -1,4 +1,4 @@
-package SK_2018_spring;
+package h_2019_1;
 /*
  * BOJ 16638과 유사함, 대신 단한번만 괄호 사용가능
  * 
