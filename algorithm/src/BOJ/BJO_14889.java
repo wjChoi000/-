@@ -1,4 +1,4 @@
-package BJO;
+package BOJ;
 
 import java.util.Scanner;
 
