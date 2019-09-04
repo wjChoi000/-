@@ -20,29 +20,45 @@ typedef struct _queue {
 	struct _queue *next, *prev;
 }Queue;
 
-Queue head, tail;
+Queue *head=NULL, *tail=NULL;
 
 int isEmpty() {
-	if (head.next == &tail)
+	if (head==NULL)
 		return 1;
 	return 0;
 }
 
 void push(Queue* d) {
-	d->next = head.next;
-	d->prev = &head;
+	if (head == NULL) {
+		head = d;
+		tail = d;
+	}
+	else {
 
-	head.next->prev = d;
-	head.next = d;
+		//우선 순위 큐 만들기
+
+		Queue* temp = head;
+		while (temp->count)
+			temp = temp->next;
+		
+		d->next = temp;
+		temp->prev = d;
+		
+		if(temp==head) head = d;
+	}
 }
 
 Queue* pop() {
-	if (isEmpty())
-		return NULL;
-	Queue* temp = tail.prev;
-	temp->prev->next = &tail;
-	tail.prev = temp->prev;
-	return temp;
+	Queue* t = tail;
+	if (tail == head) {
+		tail = NULL;
+		head = NULL;
+		return t;
+	}
+
+	tail = tail->prev;
+	tail->next = NULL;
+	return t;
 }
 
 Queue* init(int y, int x, int count,int g,int b) {
@@ -58,21 +74,18 @@ char MAP[510][510];
 int N, M;
 
 void PQ() {
-	Queue* temp = head.next;
-	printf("===========\n");
-	while (temp != &tail) {
-		printf("y=%d, x=%d,c=%d,g=%d \n", temp->y, temp->x, temp->count, temp->g);
+	Queue* temp = head;
+	
+	while (temp) {
+		printf("y=%d, x=%d,g=%d ,count=%d\n", temp->y, temp->x, temp->g, temp->count);
 		temp = temp->next;
 	}
+	printf("===========\n");
 }
 
 int main() {
 	scanf("%d %d", &N, &M);
 
-	head.next = &tail;
-	head.prev = NULL;
-	tail.prev = &head;
-	tail.next = NULL;
 
 	int i,j;
 	for (i = 0; i < N; i++)
@@ -95,17 +108,22 @@ int main() {
 	
 	push(init(y, x, 0,DOWN,0));
 	Queue* current;
-	
-	while (isEmpty()==0) {
+
+	while (head) {
 		
 		current = pop();
-		if (current==NULL)
-			break;
+		//printf("[y=%d, x=%d,g=%d ,count=%d]\n", current->y, current->x, current->g, current->count);
+		if (current == NULL )
+			continue;
+		if (current->y <0 || current->y >N - 1 || current->x <0 || current->x>M - 1)
+			continue;
+		
 		//철수
 		if (current->y == ey && current->x == ex) {
 			printf("%d", current->count);
-			return 0;
+			return;
 		}
+
 		//격자 하강
 		while (1) {
 			
@@ -120,11 +138,12 @@ int main() {
 			//철수
 			if (current->y == ey && current->x == ex) {
 				printf("%d", current->count);
-				return 0;
+				return;
 			}
 
 			
 		}
+		
 
 		//격자 여부
 		if (current->y <= 0 || current->y >= N - 1) {
@@ -148,10 +167,10 @@ int main() {
 			else
 				push(init(current->y, current->x, current->count + 1, DOWN, UP));
 		}
-		//PQ();
+		PQ();
 		free(current);
 	}
-
+	
 	printf("-1");
 	return 0;
 }
